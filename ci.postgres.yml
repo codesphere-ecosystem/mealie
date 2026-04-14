@@ -26,7 +26,7 @@ run:
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
       POSTGRES_PASSWORD: ${{ vault.pgPassword }}
-      POSTGRES_SERVER: ms-postgres-v1-10-landscape-22-pg-mealie.ms-postgres
+      POSTGRES_SERVER: "ms-postgres-v1-${{ team.id }}-landscape-${{ workspace.id }}-pg-mealie.ms-postgres"
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
     runAsUser: 1501
