@@ -1,0 +1,68 @@
+# ci.mealie.yml — CI profile for the Mealie Container Service.
+#
+# On-site challenge starter (Module 3). This profile is intentionally incomplete —
+# see Course A, Module 3, article 3.11 ("On-Site Challenge — Deploy Mealie") in the
+# Learning Hub for the full task description and hints.
+#
+# Deploy this profile from its own Workspace (e.g. name it "mealie"). Keep this
+# Workspace running separately from the "keycloak" profile's Workspace (Module 6) —
+# they are two different Landscapes from the same repo, running at the same time.
+schemaVersion: v0.2
+
+prepare:
+  steps:
+    - name: Clone mealie source
+      command: git clone https://github.com/mealie-recipes/mealie
+    - name: Create mealie-data directory
+      command: mkdir -p .mealie-data
+
+test:
+  steps: []
+
+run:
+  mealie:
+    # TODO: pick a runtime. Mealie ships a pre-built image on GHCR, so a Container
+    # Service is enough — you do not need to build from the cloned source. See
+    # article 3.7 (Choosing the Right Runtime) and 3.9 (Managed Containers in Depth).
+    #
+    # image: ghcr.io/mealie-recipes/mealie:v3.14.0
+    #
+    # TODO: pick a plan that comfortably covers Mealie's ~1G memory footprint from
+    # the original docker-compose.yml. See article 3.1 (Configuring a Landscape).
+    # plan: <fill in>
+    #
+    # replicas: 1
+    #
+    # TODO: expose port 9000 (Mealie's default) with path-based routing. Start
+    # with isPublic: false and read article 4.5 (Path-Based Routing) + article 4.6
+    # (Restricting Domain Access) before deciding whether/when to flip it to true.
+    # network:
+    #   ports:
+    #     - port: 9000
+    #       isPublic: false
+    #   paths:
+    #     - port: 9000
+    #       path: /
+    #
+    # TODO: mount a persistent volume for Mealie's /app/data — otherwise recipes
+    # are lost on every redeploy. See article 3.1 and the .mealie-data dir created
+    # in "prepare" above.
+    # customMounts:
+    #   - mountPath: '/app/data/'
+    #     subPath: './.mealie-data/'
+    #
+    # TODO: environment variables. For this first pass, get Mealie running with
+    # ANY working database (SQLite is the simplest starting point — Mealie defaults
+    # to it if DB_ENGINE is unset). You'll swap this for Managed Postgres with
+    # vault-sourced secrets in Module 4 (article 4.12) — don't over-build this yet.
+    # env:
+    #   ALLOW_SIGNUP: "false"
+    #   TZ: Europe/Berlin
+    #   BASE_URL: <your workspace dev domain — see article 3.4, Environment Variables>
+    #
+    # Mealie's container runs as a non-root user by default — check the original
+    # docker-compose.yaml (PUID/PGID: 1000) referenced in tutorials/1 if you hit
+    # permission errors on the mounted volume.
+    steps:
+      - command: echo "TODO: replace with Mealie's actual entrypoint, or set
+          customImageOpts.useDefaultEntrypoint: true"
