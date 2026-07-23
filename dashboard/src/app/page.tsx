@@ -51,7 +51,7 @@ export default async function DashboardPage() {
     ratingsRes.ratings.map((r) => [r.recipeId, r.rating])
   );
 
-  const baseUrl = process.env.MEALIE_BASE_URL ?? "";
+  const baseUrl = process.env.MEALIE_PUBLIC_URL ?? process.env.MEALIE_BASE_URL ?? "";
 
   return (
     <main className="min-h-screen bg-neutral-100 dark:bg-neutral-900 px-6 py-10 max-w-5xl mx-auto">
@@ -141,7 +141,7 @@ export default async function DashboardPage() {
               {recipe.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={`${baseUrl}/api/media/recipes/${recipe.id}/images/min-original.webp`}
+                  src={`/api/recipe-image/${recipe.id}`}
                   alt={recipe.name}
                   className="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
