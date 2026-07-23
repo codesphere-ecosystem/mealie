@@ -76,7 +76,7 @@ export default async function DashboardPage() {
           <StatCard label="Categories" value={stats.totalCategories} icon="🏷️" />
           <StatCard label="Tags" value={stats.totalTags} icon="🔖" />
           <StatCard label="Tools" value={stats.totalTools} icon="🔧" />
-          <StatCard label="Favorites" value={favoritesRes.total} icon="❤️" />
+          <StatCard label="Favorites" value={favoritesRes.total ?? 0} icon="❤️" />
         </div>
       </section>
 
@@ -130,7 +130,7 @@ export default async function DashboardPage() {
           Recently added
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {recentRes.data.map((recipe) => (
+          {(recentRes.items ?? []).map((recipe) => (
             <a
               key={recipe.id}
               href={`${baseUrl}/g/home/r/${recipe.slug}`}
