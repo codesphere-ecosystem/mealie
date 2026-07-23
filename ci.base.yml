@@ -1,8 +1,6 @@
-schemaVersion: v0.2
+schemaVersion: v0.4
 prepare:
   steps:
-    - name: Clone mealie repo
-      command: git clone https://github.com/mealie-recipes/mealie
     - name: Create mealie-data directory
       command: mkdir -p .mealie-data
 test:
@@ -26,7 +24,7 @@ run:
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
       POSTGRES_PASSWORD: ${{ vault.pgPassword }}
-      POSTGRES_SERVER: "ms-postgres-v1-${{ team.id }}-landscape-${{ workspace.id }}-pg-mealie.ms-postgres"
+      POSTGRES_SERVER: ms-postgres-v1-${{ team.id }}-landscape-${{ workspace.id }}-pg-mealie.ms-postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
     runAsUser: 1501
@@ -41,7 +39,7 @@ run:
   pg-mealie:
     provider:
       name: postgres
-      version: v1
+      schemaVersion: v1
     plan:
       id: 0
       parameters:
