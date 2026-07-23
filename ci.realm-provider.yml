@@ -1,0 +1,50 @@
+# ci.realm-provider.yml — CI profile for the Keycloak Realm Provisioner REST
+# backend (realm-provider/).
+#
+# On-site challenge starter (Module 7). See Course A, Module 7, article 7.5 in
+# the Learning Hub.
+#
+# Deploy this profile either as its own Workspace (third Workspace from this
+# repo) or as an additional service inside the "keycloak" profile's Workspace —
+# your choice. Either way it needs network access to the same vCluster your
+# Module 6 Keycloak runs in, so it must be in the same Team.
+schemaVersion: v0.2
+
+prepare:
+  steps:
+    - name: Install realm-provider dependencies
+      command: cd realm-provider && npm install
+
+test:
+  steps: []
+
+run:
+  realm-provider:
+    # TODO: pick a plan. This is a small stateless Node/Express process.
+    # plan: <fill in>
+    # replicas: 1
+    # network:
+    #   ports:
+    #     - port: 3000
+    #       isPublic: false
+    #   paths:
+    #     - port: 3000
+    #       path: /
+    #
+    # TODO: KEYCLOAK_ADMIN_URL should be the same internal vCluster hostname
+    # pattern you used for the keycloak-headless target in ci.keycloak.yml
+    # (http://<service>-x-keycloak-x-k8s.rg-${{ team.id }}.svc.cluster.local:80)
+    # — not the public dev domain. Internal platform networking works across
+    # Workspaces within the same Team.
+    #
+    # KEYCLOAK_ADMIN_PASSWORD should reference the same vault secret you set up
+    # for ci.keycloak.yml (article 4.3, Wiring Credentials via Secret Management)
+    # so both profiles stay in sync.
+    # env:
+    #   KEYCLOAK_ADMIN_URL: http://<service-name>-x-keycloak-x-k8s.rg-${{ team.id }}.svc.cluster.local:80
+    #   KEYCLOAK_ADMIN_USER: admin
+    #   KEYCLOAK_ADMIN_PASSWORD: ${{ vault.KEYCLOAK_ADMIN_PASSWORD }}
+    #   PORT: "3000"
+    steps:
+      - name: Start realm-provider
+        command: cd realm-provider && npm start

@@ -1,0 +1,17 @@
+{
+  "name": "keycloak-realm-provider",
+  "version": "0.1.0",
+  "private": true,
+  "description": "REST-backed Codesphere Managed Service provider that provisions a Keycloak realm + OIDC client per service instance.",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
