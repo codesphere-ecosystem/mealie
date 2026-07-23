@@ -43,5 +43,5 @@ versions:
   0.0.1:
     ciProfile: postgres
     # gitRef can be a commit-hash, branch or tag
-    gitRef: main
+    gitRef: utku/provider
     description: Example solution (mutable version pointing to main branch)
