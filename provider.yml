@@ -37,7 +37,12 @@ detailsSchema:
     hostname:
       type: string
 
-plans: []
+plans:
+ - id: 0
+   name: Default Plan
+   description: Resource usage depends on the ci-profile of the landscape.
+   parameters: {}
+
 
 versions:
   0.0.1:
