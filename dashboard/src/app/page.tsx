@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   getHouseholdStats,
   getRecentRecipes,
@@ -139,10 +140,11 @@ export default async function DashboardPage() {
               className="bg-white dark:bg-neutral-800 rounded-2xl shadow overflow-hidden hover:shadow-lg transition-shadow group"
             >
               {recipe.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={`/api/recipe-image/${recipe.id}`}
                   alt={recipe.name}
+                  width={400}
+                  height={144}
                   className="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               ) : (
