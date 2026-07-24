@@ -25,10 +25,9 @@ run:
       BASE_URL: ${{ workspace.id }}-3000.1.csa.codesphere-demo.com
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
-      POSTGRES_PASSWORD: ${{ vault.pgPassword }}
+      POSTGRES_PASSWORD: ${{ vault.pgUserPassword }}
       POSTGRES_SERVER: "ms-postgres-v1-${{ team.id }}-landscape-${{ workspace.id }}-pg-mealie.ms-postgres"
       POSTGRES_PORT: 5432
-      POSTGRES_DB: mealie
     runAsUser: 1501
     runAsGroup: 1010
     volumeMounts:
@@ -37,7 +36,7 @@ run:
         workspacePath: ./.mealie-data/
     steps:
       - command: /app/run.sh
-    image: ghcr.io/mealie-recipes/mealie:v3.14.0
+    image: ghcr.io/mealie-recipes/mealie:${{ workspace.env.VERSION }}
   pg-mealie:
     provider:
       name: postgres
@@ -52,5 +51,5 @@ run:
       userName: mealie
       databaseName: mealie
     secrets:
-      userPassword: ${{ vault.pgPassword }}
-      superuserPassword: ${{ vault.pgPassword }}
+      userPassword: ${{ vault.pgUserPassword }}
+      superuserPassword: ${{ vault.pgSuperuserPassword }}
