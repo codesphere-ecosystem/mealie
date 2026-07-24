@@ -36,6 +36,7 @@ detailsSchema:
   properties:
     hostname:
       type: string
+      format: uri
 
 plans:
  - id: 0
