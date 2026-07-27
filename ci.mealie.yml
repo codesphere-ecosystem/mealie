@@ -1,0 +1,29 @@
+schemaVersion: v0.4
+prepare:
+  steps:
+    - name: Create mealie-data directory
+      command: mkdir -p .mealie-data
+test:
+  steps: []
+run:
+  mealie:
+    healthEndpoint: http://localhost:9000/
+    plan: 101
+    replicas: 1
+    network:
+      ports:
+        - port: 3000
+          isPublic: false
+        - port: 9000
+          isPublic: false
+      paths:
+        - port: 9000
+          path: /
+    env: {}
+    runAsUser: 1501
+    runAsGroup: 1010
+    volumeMounts:
+      - name: _workspace
+        mountPath: /app/data
+        workspacePath: .mealie-data
+    image: ghcr.io/mealie-recipes/mealie:v3.14.0
