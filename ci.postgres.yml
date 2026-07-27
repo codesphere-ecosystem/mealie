@@ -37,7 +37,7 @@ run:
         workspacePath: ./.mealie-data/
     steps:
       - command: /app/run.sh
-    image: ghcr.io/mealie-recipes/mealie:v3.14.0
+    image: ghcr.io/mealie-recipes/mealie:${{ workspace.env.VERSION }}
   pg-mealie:
     provider:
       name: postgres
