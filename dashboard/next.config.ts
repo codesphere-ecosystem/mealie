@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   basePath: "/dashboard",
-  allowedDevOrigins: ["257-3000.1.csa.codesphere-demo.com"],
+  allowedDevOrigins: [process.env.WORKSPACE_DEV_DOMAIN],
 };
 
 export default nextConfig;

@@ -37,8 +37,6 @@ run:
       - name: _workspace
         mountPath: /app/data/
         workspacePath: ./.mealie-data/
-    steps:
-      - command: /app/run.sh
     image: ghcr.io/mealie-recipes/mealie:v3.14.0
   pg-mealie:
     provider:
@@ -67,7 +65,9 @@ run:
         - port: 3000
           path: /dashboard
           stripPath: false
-    env: {}
+    env:
+      MEALIE_BASE_URL: https://${{ workspace.id }}-3000.1.csa.codesphere-demo.com
+      MEALIE_API_TOKEN: ${{ vault.MEALIE_API_TOKEN }}
     volumeMounts:
       - name: _workspace
         mountPath: /home/user/app
