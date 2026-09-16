@@ -1,10 +1,12 @@
-schemaVersion: v0.2
+schemaVersion: v0.4
 prepare:
   steps:
-    - name: Clone mealie repo
-      command: git clone https://github.com/mealie-recipes/mealie
     - name: Create mealie-data directory
       command: mkdir -p .mealie-data
+    - name: Use latest Node LTS
+      command: fnm install lts/latest --use
+    - name: Install dashboard deps
+      command: cd dashboard && npm install
 test:
   steps: []
 run:
@@ -26,7 +28,7 @@ run:
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
       POSTGRES_PASSWORD: ${{ vault.pgPassword }}
-      POSTGRES_SERVER: "ms-postgres-v1-${{ team.id }}-landscape-${{ workspace.id }}-pg-mealie.ms-postgres"
+      POSTGRES_SERVER: ms-postgres-v1-${{ team.id }}-landscape-${{ workspace.id }}-pg-mealie.ms-postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
     runAsUser: 1501
@@ -35,13 +37,11 @@ run:
       - name: _workspace
         mountPath: /app/data/
         workspacePath: ./.mealie-data/
-    steps:
-      - command: /app/run.sh
-    image: ghcr.io/mealie-recipes/mealie:${{ workspace.env.VERSION }}
+    image: ghcr.io/mealie-recipes/mealie:v3.14.0
   pg-mealie:
     provider:
       name: postgres
-      version: v1
+      schemaVersion: v1
     plan:
       id: 0
       parameters:
@@ -54,3 +54,23 @@ run:
     secrets:
       userPassword: ${{ vault.pgPassword }}
       superuserPassword: ${{ vault.pgPassword }}
+  dashboard:
+    plan: 101
+    replicas: 1
+    network:
+      ports:
+        - port: 3000
+          isPublic: false
+      paths:
+        - port: 3000
+          path: /dashboard
+          stripPath: false
+    env:
+      MEALIE_BASE_URL: https://${{ workspace.id }}-3000.1.csa.codesphere-demo.com
+      MEALIE_API_TOKEN: ${{ vault.MEALIE_API_TOKEN }}
+    volumeMounts:
+      - name: _workspace
+        mountPath: /home/user/app
+        workspacePath: ""
+    steps:
+      - command: cd dashboard && npm run dev
